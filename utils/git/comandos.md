@@ -113,7 +113,7 @@ git push origin rama<br>
 >Rebase.<br>
 
 git rebase nombreRamaExperimental<br>
-git rebase master<br><br>
+git rebase master<br>
 - Nos permite cambiar la historia del commit de una rama<br>
 - Reorganizar el trabajo realizado, solo usarlo de manera local<br>
 - Primero siempre realizarlo en la rama que va a desaparecer o experimental, luego en la rama principal<br><br>
@@ -125,14 +125,23 @@ git stash<br>
 - Su uso es tipico cuando estamos modificando algo y no queremos guardar los cambios<br>
 - Stash es una lista de estados que nos permite guardar cambios para despues<br>
 - Stash. Podemos agregar mensajes al stash para poder identificarlos<br><br>
+
 git stash save "mensaje asociado al stash"<br><br>
+
 - Stash se comporta como un stack de datos de manera LIFO. Pop recupera el ultimo estado del stashed<br><br>
+
 git stash pop<br><br>
+
 - Stash. Listado de elementos del stash<br><br>
+
 git stash list<br><br>
+
 - Crear una rama con el stash<br><br>
+
 git stash branch nombre_de_rama<br><br>
+
 - Eliminar el elemento mas reciente del stash<br><br>
+
 git stash drop<br><br>
 
 ##Complementarios <br>
@@ -147,6 +156,7 @@ eval $(ssh-agent - s)<br>
 ssh-add ~/.ssh/id_rsa<br>
 
 >Agrega un repositorio remoto para mantener actualizado el fork<br>
+
 git remote add upstream URL<br>
 git pull upstream master<br>
 git push origin master<br>
