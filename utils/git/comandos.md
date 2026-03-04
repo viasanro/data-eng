@@ -261,7 +261,7 @@ gitk<br><br>
 
 >git log<br>
 
-- Te muestra el id commit y el t�tulo del commit.<br>
+- Te muestra el id commit y el titulo del commit.<br>
 
 git log --oneline<br>
 
@@ -269,11 +269,11 @@ git log --oneline<br>
 
 git log --decorate<br>
 
-- Explica el n�mero de l�neas que se cambiaron brevemente.<br>
+- Explica el numero de lineas que se cambiaron brevemente.<br>
 
 git log --stat<br>
 
-- Explica el n�mero de l�neas que se cambiaron y te muestra que se cambi� en el contenido.<br>
+- Explica el numero de lineas que se cambiaron y te muestra que se cambio en el contenido.<br>
 
 git log -p<br>
 
@@ -286,31 +286,31 @@ git log --graph --oneline --decorate y<br>
 
 git log --pretty=format:"%cn hizo un commit %h el dia %cd"<br>
 
-- Limitamos el n�mero de commits.<br>
+- Limitamos el numero de commits.<br>
 
 git log -3<br>
 
 - Commits para localizar por fechas.<br>
 
-git log --after=�2018-1-2� ,<br>
-git log --after=�today� y<br>
-git log --after=�2018-1-2� --before=�today�<br>
+git log --after="2018-1-2" ,<br>
+git log --after="today" y<br>
+git log --after="2018-1-2" --before="today"<br>
 
 - Commits realizados por autor que cumplan exactamente con el nombre.<br>
 
-git log --author=�Name Author�<br> 
+git log --author="Name_Author"<br> 
 
-- Busca los commits que cumplan tal cual est� escrito entre las comillas<br>
+- Busca los commits que cumplan tal cual esta escrito entre las comillas<br>
 
-git log --grep=�INVIE�<br>
+git log --grep="INVIE"<br>
 
--Busca los commits que cumplan sin importar may�sculas o min�sculas.<br>
+-Busca los commits que cumplan sin importar mayusculas o minusculas.<br>
 
-git log --grep=�INVIE� �i <br>
+git log --grep="INVIE" -i <br>
 
-- Busca los commits en un archivo en espec�fico.<br>
+- Busca los commits en un archivo en especifico.<br>
 
-git log � index.html<br>
+git log -- index.html<br>
 
 - guardar los logs en un archivo txt<br>
 
