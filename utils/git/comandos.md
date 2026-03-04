@@ -5,31 +5,52 @@ git init<br>
 >Verificamos la configuracion actual<br>
 
 git config -l<br>
-#Modificamos el email
-git config --global -user.email "youremail@example.com"
-#Para modificar el usuario 
-git config --global -user.name "yourusername"
-#Agrega al area de staging los cambios realizados en el directorio 
-git add .
-#Agrega al repositorio local los cambios del listos en el area de staging
-git commit -m "mensaje"
-#Muestra el estado actual del area de staging
-git status
-#Muestra el historial de los commits realizados
-git log
-#Muestra estadisticas de los cambios realizados en cada commit
-git log --stat
-#Cambia el HEAD o puntero al ID del commit indicado
-git checkout id9ir932f9230
-#HEAD: Saca archivos del area de Staging, no los borra
-#hard: Borra todo, absolutamente todo.
-#Soft: Borra todo el historial y registros del git, pero guarda el los cambios
-#que tengamos en staging. 
-git reset HEAD or --hard or --soft
-#cached: Elimina los archivos de nuestro repositorio local y del area de staging
-pero los mantiene en nuestro disco duro. Le dice a Git que deje de trackear.
-#forced: elimina los archivos de Git y del disco duro.
-git rm --cached or --forced File
+
+>Modificamos el email<br>
+
+git config --global -user.email "youremail@example.com"<br>
+
+>Para modificar el usuario<br>
+
+git config --global -user.name "yourusername"<br>
+
+>Agrega al area de staging los cambios realizados en el directorio<br>
+
+git add . <br>
+
+>Agrega al repositorio local los cambios del listos en el area de staging<br>
+
+git commit -m "mensaje" <br>
+
+>Muestra el estado actual del area de staging <br>
+
+git status <br>
+
+>Muestra el historial de los commits realizados <br>
+
+git log <br>
+
+>Muestra estadisticas de los cambios realizados en cada commit <br>
+
+git log --stat <br>
+
+>Cambia el puntero HEAD al ID del commit indicado <br>
+
+git checkout id9ir932f9230 <br>
+
+>Mueve la rama a un commit anterior. Reescribe la historia <br>
+- HEAD: Saca archivos del area de Staging, no los borra <br>
+- hard: Borra todo, absolutamente todo <br>
+- Soft: Borra todo el historial y registros del git, pero guarda el los cambios <br>
+git reset HEAD or --hard or --soft <br>
+
+>Eliminación de archivos<br>
+
+- cached: Elimina los archivos de nuestro repositorio local y del area de staging
+pero los mantiene en nuestro disco duro. Le dice a Git que deje de trackear. <br>
+- forced: elimina los archivos de Git y del disco duro. <br>
+git rm --cached or --forced File <br>
+
 #Muestra los cambios realizados en el ultimo commit
 git show
 #Muestra las diferencias entre el archivo actual y el ultimo commit.
