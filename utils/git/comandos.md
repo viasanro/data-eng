@@ -1,5 +1,5 @@
-#Inicializa un directorio para utilizarlo de repositorio local
-git init
+>Inicializa un directorio para utilizarlo de repositorio local<br>
+git init<br>
 #Verificamos la configuracion actual
 git config -l
 #Modificamos el email
