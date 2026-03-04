@@ -14,23 +14,23 @@ git config -l<br>
 
 >Modificamos el email<br>
 
-git config --global -user.email "youremail@example.com"<br>
+git config --global -user.email *"youremail@example.com"*<br>
 
 >Para modificar el usuario<br>
 
-git config --global -user.name "yourusername"<br>
+git config --global -user.name *"yourusername"*<br>
 
 >Crear una rama<br>
 
-git branch nombreRama<br>
+git branch *nombreRama*<br>
 
 >Borrar una rama<br>
 
-git branch -D nombreRama<br>
+git branch -D *nombreRama*<br>
 
 >Nos permite cambiar de branch<br>
 
-git checkout rama<br>
+git checkout *rama*<br>
 
 >Lista las ramas disponibles<br>
 
@@ -50,7 +50,7 @@ git add .<br>
 
 >Agrega al repositorio local los cambios del listos en el area de staging<br>
 
-git commit -m "mensaje"<br>
+git commit -m *"mensaje"*<br>
 
 >Muestra el estado actual del area de staging<br>
 
@@ -66,7 +66,7 @@ git log --stat<br>
 
 >Cambia el puntero HEAD al ID del commit indicado<br>
 
-git checkout id9ir932f9230<br>
+git checkout *id9ir932f9230*<br>
 
 >Mueve la rama a un commit anterior. Reescribe la historia<br>
 
@@ -77,7 +77,7 @@ git reset HEAD or --hard or --soft<br>
 
 >Eliminación de archivos<br>
 
-git rm --cached or --forced File<br>
+git rm --cached or --forced *File*<br>
 - **cached:** Elimina los archivos de nuestro repositorio local y del area de staging
 pero los mantiene en nuestro disco duro. Le dice a Git que deje de trackear.<br>
 - **forced:** elimina los archivos de Git y del disco duro.<br>
@@ -100,11 +100,11 @@ git remote -v<br>
 
 >Agrega un repositorio remoto para poder accederlo localmente. Se usa si alias origin no existe<br>
 
-git remote add origin URL<br>
+git remote add origin *URL*<br>
 
 >Cambia la URL del repositorio remoto. Se usa si el alias origin ya existe<br>
 
-git remote set-url origin URL_SSH_REMOTO<br>
+git remote set-url origin *URL_SSH_REMOTO*<br>
 
 >Descarga los ultimos cambios presentes en el servidor remoto<br>
 
@@ -124,8 +124,8 @@ git push origin rama<br>
 
 >Rebase.<br>
 
-git rebase nombreRamaExperimental<br>
-git rebase master<br>
+git rebase *nombreRamaExperimental*<br>
+git rebase *master*<br>
 - Nos permite cambiar la historia del commit de una rama<br>
 - Reorganizar el trabajo realizado, solo usarlo de manera local<br>
 - Primero siempre realizarlo en la rama que va a desaparecer o experimental, luego en la rama principal<br><br>
@@ -138,7 +138,7 @@ git stash<br>
 - Stash es una lista de estados que nos permite guardar cambios para despues<br><br>
 - Stash. Podemos agregar mensajes al stash para poder identificarlos<br>
 
-git stash save "mensaje asociado al stash"<br><br>
+git stash save *"mensaje asociado al stash"*<br><br>
 - Stash se comporta como un stack de datos de manera LIFO. Pop recupera el ultimo estado del stashed<br>
 
 git stash pop<br><br>
@@ -147,7 +147,7 @@ git stash pop<br><br>
 git stash list<br><br>
 - Crear una rama con el stash<br>
 
-git stash branch nombre_de_rama<br><br>
+git stash branch *nombre_de_rama*<br><br>
 - Eliminar el elemento mas reciente del stash<br>
 
 git stash drop<br><br>
@@ -174,13 +174,13 @@ git checkout rama<br>
 - Para listar y encontrar cual fue es el commit que nos interesa<br>
 
 git log -oneline<br>  
-git cherry-pick <commit_id><br><br>
+git cherry-pick *commit_id*<br><br>
 
 >amend 
 - Lo que hace es remendar el ultimo commit realizado en caso de que nos haya faltado algo<br>
 - Debemos de anhadir el cambio con add necesariamente luego se realiza el commit<br>
 
-git add <File or Path><br>
+git add *File_or_Path*<br>
 git commit --amend<br><br>
 
 >Git Reset y Reflog<br>
@@ -196,7 +196,7 @@ git reset --HARD *id_hash*<br>
 
 git grep -n *palabra*   *-n para saber en que linea utilice la palabra*<br>
 git grep -c *palabra*   *-c para saber cuantas veces utilice la palabra*<br>
-git log -S *palabra*    *Nos muestra todas veces que use la palabra en los commits*<br><br>
+git log -S *palabra*    *Nos muestra toda vez que use la palabra en los commits*<br><br>
 
 >Conteo de commits por usuario<br>
 
@@ -257,4 +257,61 @@ git show-branch --all<br>
 
 >Mostrar graficamente la historia de los commits<br>
 
-gitk<br>
+gitk<br><br>
+
+>git log<br>
+
+- Te muestra el id commit y el t�tulo del commit.<br>
+
+git log --oneline<br>
+
+- Te muestra donde se encuentra el head point en el log.<br>
+
+git log --decorate<br>
+
+- Explica el n�mero de l�neas que se cambiaron brevemente.<br>
+
+git log --stat<br>
+
+- Explica el n�mero de l�neas que se cambiaron y te muestra que se cambi� en el contenido.<br>
+
+git log -p<br>
+
+- Indica que commits ha realizado un usuario, mostrando el usuario y el titulo de sus commits.<br>
+
+git shortlog<br>
+git log --graph --oneline --decorate y<br>
+
+- Muestra mensajes personalizados de los commits.<br>
+
+git log --pretty=format:"%cn hizo un commit %h el dia %cd"<br>
+
+- Limitamos el n�mero de commits.<br>
+
+git log -3<br>
+
+- Commits para localizar por fechas.<br>
+
+git log --after=�2018-1-2� ,<br>
+git log --after=�today� y<br>
+git log --after=�2018-1-2� --before=�today�<br>
+
+- Commits realizados por autor que cumplan exactamente con el nombre.<br>
+
+git log --author=�Name Author�<br> 
+
+- Busca los commits que cumplan tal cual est� escrito entre las comillas<br>
+
+git log --grep=�INVIE�<br>
+
+-Busca los commits que cumplan sin importar may�sculas o min�sculas.<br>
+
+git log --grep=�INVIE� �i <br>
+
+- Busca los commits en un archivo en espec�fico.<br>
+
+git log � index.html<br>
+
+- guardar los logs en un archivo txt<br>
+
+git log > log.txt<br>
