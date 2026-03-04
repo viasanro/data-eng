@@ -1,4 +1,4 @@
-##Esenciales<br>
+**Esenciales**<br>
 
 >Inicializa un directorio para utilizarlo de repositorio local<br>
 
@@ -123,28 +123,19 @@ git rebase master<br>
 git stash<br>
 - Para agregar cambios a un lugar temporal denominado stash<br>
 - Su uso es tipico cuando estamos modificando algo y no queremos guardar los cambios<br>
-- Stash es una lista de estados que nos permite guardar cambios para despues<br>
+- Stash es una lista de estados que nos permite guardar cambios para despues<br><br>
 - Stash. Podemos agregar mensajes al stash para poder identificarlos<br><br>
-
 git stash save "mensaje asociado al stash"<br><br>
-
-- Stash se comporta como un stack de datos de manera LIFO. Pop recupera el ultimo estado del stashed<br><br>
-
+- Stash se comporta como un stack de datos de manera LIFO. Pop recupera el ultimo estado del stashed<br>
 git stash pop<br><br>
-
-- Stash. Listado de elementos del stash<br><br>
-
+- Stash. Listado de elementos del stash<br>
 git stash list<br><br>
-
-- Crear una rama con el stash<br><br>
-
+- Crear una rama con el stash<br>
 git stash branch nombre_de_rama<br><br>
-
-- Eliminar el elemento mas reciente del stash<br><br>
-
+- Eliminar el elemento mas reciente del stash<br>
 git stash drop<br><br>
 
-##Complementarios <br>
+**Complementarios** <br>
 
 >Generamos una clave SSH<br>
 
