@@ -1,4 +1,8 @@
-**Esenciales**<br>
+### **Comandos Esenciales**<br><br>
+
+>Help<br>
+
+git *comando* --help
 
 >Inicializa un directorio para utilizarlo de repositorio local<br>
 
@@ -31,6 +35,14 @@ git checkout rama<br>
 >Lista las ramas disponibles<br>
 
 git branch<br>
+
+>Visualizar las ramas remotas<br>
+
+git branch -r<br>
+
+>Visualizar todas las ramas<br>
+
+git branch -a<br>
 
 >Agrega al area de staging los cambios realizados en el directorio<br>
 
@@ -140,7 +152,57 @@ git stash branch nombre_de_rama<br><br>
 
 git stash drop<br><br>
 
-**Complementarios** <br>
+### **Comandos Avanzados**<br><br>
+
+>Clean<br> 
+
+- Archivos que son parte de tu proyecto pero no deberias agregar, o que quieres borrar<br>
+- Se exeptuan los archivos contenidos en el archivo *.gitignore*<br>
+- --dry-run lista los archivos que va a borrar, pero no los borra aun<br>
+
+git clean --dry-run<br><br>
+- Para borrarlos ejecutamos el comando con el parametro -f<br>
+
+git clean -f<br><br>
+
+> Cherry-pick<br>
+
+- Cuando necesitamos un avance de una de las ramas en la rama principal<br>
+- Nos ubicamos en la rama y ejecutamos el siguiente comando para buscar el commit<br>
+
+git checkout rama<br>
+- Para listar y encontrar cual fue es el commit que nos interesa<br>
+
+git log -oneline<br>  
+git cherry-pick <commit_id><br><br>
+
+>amend 
+- Lo que hace es remendar el ultimo commit realizado en caso de que nos haya faltado algo<br>
+- Debemos de anhadir el cambio con add necesariamente luego se realiza el commit<br>
+
+git add <File or Path><br>
+git commit --amend<br><br>
+
+>Git Reset y Reflog<br>
+
+- Usese en caso de emergencia<br>
+- Aqui encontramos el hash como la posicion del head a lo largo del tiempo<br>
+- Buscamos el ultimo hash donde funcionaba correctamente<br>
+
+git reflog<br>
+git reset --HARD *id_hash*<br>
+
+> Búsqueda de archivos y commits de git con *grep* y *log*<br>
+
+git grep -n *palabra*   *-n para saber en que linea utilice la palabra*<br>
+git grep -c *palabra*   *-c para saber cuantas veces utilice la palabra*<br>
+git log -S *palabra*    *Nos muestra todas veces que use la palabra en los commits*<br><br>
+
+>Conteo de commits por usuario<br>
+
+git shortlog -sn --all --no-merges<br><br>
+
+### **Comandos Complementarios**<br>
 
 >Generamos una clave SSH<br>
 
@@ -196,34 +258,3 @@ git show-branch --all<br>
 >Mostrar graficamente la historia de los commits<br>
 
 gitk<br>
-
-#Clean. Archivos que son parte de tu proyecto pero no deberias agregar, o que quieres borrar.
-#Se exeptuan los archivos contenidos en el archivo .gitignore
-#--dry-run lista los archivos que va a borrar, pero no los borra aun.
-git clean --dry-run
-#Para borrarlos ejecutamos el comando con el parametro -f
-git clean -f
-#Cherry-pick. Cuando necesitamos un avance de una de las ramas en la rama principal
-git checkout rama #nos ubicamos en la rama y ejecutamos el siguiente comando para buscar el commit
-git log -oneline  #para listar y encontrar cual fue es el commit que nos interesa
-git cherry-pick <commit_id>
-#amend. Lo que hace es remendar el ultimo commit realizado en caso de que nos haya faltado algo.
-#Debemos de anhadir el cambio con add necesariamente luego se realiza el commit.
-git add <File or Path>
-git commit --amend
-#Git Reset y Reflog. Usese en caso de emergencia.
-git reflog   #Aqui encontramos el hash como la posicion del head a lo largo del tiempo
-             #Buscamos el ultimo hash donde funcionaba correctamente
-git reset --HARD <id_hash>
-#Buscar en archivos y commits de git con grep y log
-git grep -n <palabra>   #-n para saber en que linea utilice la palabra
-git grep -c <palabra>   #-c para saber cuantas veces utilice la palabra
-git log -S <palabra>    #Nos muestra todas veces que use la palabra en los commits
-#Ver cuantos commits se realizaron por usuario
-git shortlog -sn --all --no-merges
-#Visualizar las ramas remotas
-git branch -r
-#Visualizar todas las ramas
-git branch -a
-#Help del comando
-git <comando> --help
