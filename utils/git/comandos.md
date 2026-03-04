@@ -124,7 +124,7 @@ git stash<br>
 - Para agregar cambios a un lugar temporal denominado stash<br>
 - Su uso es tipico cuando estamos modificando algo y no queremos guardar los cambios<br>
 - Stash es una lista de estados que nos permite guardar cambios para despues<br><br>
-- Stash. Podemos agregar mensajes al stash para poder identificarlos<br><br>
+- Stash. Podemos agregar mensajes al stash para poder identificarlos<br>
 git stash save "mensaje asociado al stash"<br><br>
 - Stash se comporta como un stack de datos de manera LIFO. Pop recupera el ultimo estado del stashed<br>
 git stash pop<br><br>
