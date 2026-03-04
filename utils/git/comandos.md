@@ -1,3 +1,5 @@
+##Esenciales<br>
+
 >Inicializa un directorio para utilizarlo de repositorio local<br>
 
 git init<br>
@@ -14,119 +16,181 @@ git config --global -user.email "youremail@example.com"<br>
 
 git config --global -user.name "yourusername"<br>
 
+>Crear una rama<br>
+
+git branch nombreRama<br>
+
+>Borrar una rama<br>
+
+git branch -D nombreRama<br>
+
+>Nos permite cambiar de branch<br>
+
+git checkout rama<br>
+
+>Lista las ramas disponibles<br>
+
+git branch<br>
+
 >Agrega al area de staging los cambios realizados en el directorio<br>
 
-git add . <br>
+git add .<br>
 
 >Agrega al repositorio local los cambios del listos en el area de staging<br>
 
-git commit -m "mensaje" <br>
+git commit -m "mensaje"<br>
 
->Muestra el estado actual del area de staging <br>
+>Muestra el estado actual del area de staging<br>
 
-git status <br>
+git status<br>
 
->Muestra el historial de los commits realizados <br>
+>Muestra el historial de los commits realizados<br>
 
-git log <br>
+git log<br>
 
->Muestra estadisticas de los cambios realizados en cada commit <br>
+>Muestra estadisticas de los cambios realizados en cada commit<br>
 
-git log --stat <br>
+git log --stat<br>
 
->Cambia el puntero HEAD al ID del commit indicado <br>
+>Cambia el puntero HEAD al ID del commit indicado<br>
 
-git checkout id9ir932f9230 <br>
+git checkout id9ir932f9230<br>
 
->Mueve la rama a un commit anterior. Reescribe la historia <br>
-- HEAD: Saca archivos del area de Staging, no los borra <br>
-- hard: Borra todo, absolutamente todo <br>
-- Soft: Borra todo el historial y registros del git, pero guarda el los cambios <br>
-git reset HEAD or --hard or --soft <br>
+>Mueve la rama a un commit anterior. Reescribe la historia<br>
+
+git reset HEAD or --hard or --soft<br>
+- **HEAD:** Saca archivos del area de Staging, no los borra<br>
+- **hard:** Borra todo, absolutamente todo<br>
+- **Soft:** Borra todo el historial y registros del git, pero guarda el los cambios<br>
 
 >Eliminación de archivos<br>
 
-- cached: Elimina los archivos de nuestro repositorio local y del area de staging
-pero los mantiene en nuestro disco duro. Le dice a Git que deje de trackear. <br>
-- forced: elimina los archivos de Git y del disco duro. <br>
-git rm --cached or --forced File <br>
+git rm --cached or --forced File<br>
+- **cached:** Elimina los archivos de nuestro repositorio local y del area de staging
+pero los mantiene en nuestro disco duro. Le dice a Git que deje de trackear.<br>
+- **forced:** elimina los archivos de Git y del disco duro.<br>
 
-#Muestra los cambios realizados en el ultimo commit
-git show
-#Muestra las diferencias entre el archivo actual y el ultimo commit.
-git diff
-#Generamos una clave SSH
-ssh-keygen -t rsa -b 4096 -C "youremail@example.com"
-#Comprobar el proceso de creacion SSH y agregarlo en Windows 
-eval $(ssh-agent - s)
-ssh-add ~/.ssh/id_rsa
-#Agrega un repositorio remoto para poder accederlo localmente.
-git remote add origin URL
-#Agrega un repositorio remoto para mantener actualizado el fork.
-git remote add upstream URL
-git pull upstream master
-git push origin master
-#Muestra los repositorios remotos accesibles actualmente
-git remote
-#Muestra la ruta de los repositorios remotos disponibles
-git remote -v
-#Descarga los ultimos cambios presentes en el servidor remoto
-git pull origin main
-#Permite descargas aunque no sean de las mismas ramas
-git pull origin main --allow-unrelated-histories
-#Envia los cambios que tenemos en el repositorio local del branch master al repositorio remoto
-git push origin master
-#Cambia la URL del repositorio remoto
-git remote set-url origin URL_SSH_REMOTO
-#Muestra una estructura de arblo del git log
-git log --all --graph --decorate --oneline
-#Agrega un alias al comando
-alias arbolito "git log --all --graph --decorate --oneline"
-#Agregar etiquetas como por ejemplo de versionado a un ID de commit especifico
-git tag -a v0.1 -m "Versionado" id8fuf5
-#Muestra las etiquetas activas creadas previamente
-git tag
-#Muestra la referecia asociada al tag especifico
-git show-ref --tags
-#Envia los tags previamente creados al repositorio remoto
-git push origin --tags
-#Borra el tag especifico del repositorio local
-git tag -d v0.1
-#Borra el tag especifico del repositorio remoto
-git push origin :refs/tags/v0.1
-#Crear una rama
-git branch nombreRama
-#Borrar una rama
-git branch -D nombreRama
-#Nos permite cambiar de branch
-git checkout rama
-#Lista las ramas disponibles
-git branch
-#Nos muestra las ramas con sus historias
-git show-branch --all
-#Enviamos nuestra rama al repositorio remoto
-git push origin rama
-#Rebase. Nos permite cambiar la historia del commit de una rama
-#Reorganizar el trabajo realizado, solo usarlo de manera local
-#Primero siempre realizarlo en la rama que va a desaparecer o experimental, luego en la rama principal
-git rebase nombreRamaExperimental
-git rebase master
-#Mostrar graficamente la historia de los commits
-gitk
-#Stash. Para agregar cambios a un lugar temporal denominado stash
-#Su uso es tipico cuando estamos modificando algo y no queremos guardar los cambios
-git stash
-#Stash es una lista de estados que nos permite guardar cambios para despues.
-#Stash. Podemos agregar mensajes al stash para poder identificarlos
-git stash save "mensaje asociado al stash"
-#Stash se comporta como un stack de datos de manera LIFO. Pop recupera el ultimo estado del stashed
-git stash pop
-#Stash. Listado de elementos del stash
-git stash list
-#Crear una rama con el stash
-git stash branch <nombre de rama>
-#Eliminar el elemento mas reciente del stash
-git stash drop
+>Muestra los cambios realizados en el ultimo commit<br>
+
+git show<br>
+
+>Muestra las diferencias entre el archivo actual y el ultimo commit<br>
+
+git diff<br>
+
+>Muestra los repositorios remotos accesibles actualmente<br>
+
+git remote<br>
+
+>Muestra la ruta de los repositorios remotos disponibles<br>
+
+git remote -v<br>
+
+>Agrega un repositorio remoto para poder accederlo localmente. Se usa si alias origin no existe<br>
+
+git remote add origin URL<br>
+
+>Cambia la URL del repositorio remoto. Se usa si el alias origin ya existe<br>
+
+git remote set-url origin URL_SSH_REMOTO<br>
+
+>Descarga los ultimos cambios presentes en el servidor remoto<br>
+
+git pull origin main<br>
+
+>Permite descargas aunque no sean de las mismas ramas<br>
+
+git pull origin main --allow-unrelated-histories<br>
+
+>Envia los cambios que tenemos en el repositorio local del branch main al repositorio remoto<br>
+
+git push origin main<br>
+
+>Enviamos nuestra rama al repositorio remoto<br>
+
+git push origin rama<br>
+
+>Rebase.<br>
+
+git rebase nombreRamaExperimental<br>
+git rebase master<br><br>
+- Nos permite cambiar la historia del commit de una rama<br>
+- Reorganizar el trabajo realizado, solo usarlo de manera local<br>
+- Primero siempre realizarlo en la rama que va a desaparecer o experimental, luego en la rama principal<br><br>
+
+>Stash.<br>
+
+git stash<br>
+- Para agregar cambios a un lugar temporal denominado stash<br>
+- Su uso es tipico cuando estamos modificando algo y no queremos guardar los cambios<br>
+- Stash es una lista de estados que nos permite guardar cambios para despues<br>
+- Stash. Podemos agregar mensajes al stash para poder identificarlos<br><br>
+git stash save "mensaje asociado al stash"<br><br>
+- Stash se comporta como un stack de datos de manera LIFO. Pop recupera el ultimo estado del stashed<br><br>
+git stash pop<br><br>
+- Stash. Listado de elementos del stash<br><br>
+git stash list<br><br>
+- Crear una rama con el stash<br><br>
+git stash branch nombre_de_rama<br><br>
+- Eliminar el elemento mas reciente del stash<br><br>
+git stash drop<br><br>
+
+##Complementarios <br>
+
+>Generamos una clave SSH<br>
+
+ssh-keygen -t rsa -b 4096 -C "youremail@example.com"<br>
+
+>Comprobar el proceso de creacion SSH y agregarlo en Windows<br>
+
+eval $(ssh-agent - s)<br>
+ssh-add ~/.ssh/id_rsa<br>
+
+>Agrega un repositorio remoto para mantener actualizado el fork<br>
+git remote add upstream URL<br>
+git pull upstream master<br>
+git push origin master<br>
+
+>Muestra una estructura de arblo del git log<br>
+
+git log --all --graph --decorate --oneline<br>
+
+>Agrega un alias al comando<br>
+
+alias arbolito "git log --all --graph --decorate --oneline"<br>
+
+>Agregar etiquetas como por ejemplo de versionado a un ID de commit especifico<br>
+
+git tag -a v0.1 -m "Versionado" id8fuf5<br>
+
+>Muestra las etiquetas activas creadas previamente<br>
+
+git tag<br>
+
+>Muestra la referecia asociada al tag especifico<br>
+
+git show-ref --tags<br>
+
+>Envia los tags previamente creados al repositorio remoto<br>
+
+git push origin --tags<br>
+
+>Borra el tag especifico del repositorio local<br>
+
+git tag -d v0.1<br>
+
+>Borra el tag especifico del repositorio remoto<br>
+
+git push origin :refs/tags/v0.1<br>
+
+>Nos muestra las ramas con sus historias<br>
+
+git show-branch --all<br>
+
+>Mostrar graficamente la historia de los commits<br>
+
+gitk<br>
+
 #Clean. Archivos que son parte de tu proyecto pero no deberias agregar, o que quieres borrar.
 #Se exeptuan los archivos contenidos en el archivo .gitignore
 #--dry-run lista los archivos que va a borrar, pero no los borra aun.
@@ -157,6 +221,3 @@ git branch -r
 git branch -a
 #Help del comando
 git <comando> --help
-
-
-
