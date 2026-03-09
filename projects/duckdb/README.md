@@ -13,17 +13,17 @@ El objetivo es demostrar la capacidad de procesar grandes volúmenes de datos de
 > Estructura del Proyecto:<br>
 
 projects-duckdb/<br>
-├── data/                   # Datos crudos (CSV) a ser utilizados como source<br>
-├── images/                 # Imagenes utilizadas para clarificar el cometido.<br> 
-├── scripts/                # Lógica del ELT en Python.<br>
-├── outputs/                # Salidas o sinks generados.<br>
+├── data/                   &nbsp;&nbsp;&nbsp;&nbsp; - Datos crudos (CSV) a ser utilizados como source<br>
+├── images/                 &nbsp;&nbsp;&nbsp;&nbsp; - Imagenes utilizadas para clarificar el cometido.<br> 
+├── scripts/                &nbsp;&nbsp;&nbsp;&nbsp; - Lógica del ELT en Python.<br>
+├── outputs/                &nbsp;&nbsp;&nbsp;&nbsp; - Salidas o sinks generados.<br>
 └── README.md<br><br>
 
 > Flujo ELT<br>
 
 El pipeline realiza las siguientes etapas:<br>
 1. **Extract & Load:** Carga de datos crudos desde un CSV de más de 22.5k filas (311 Service Requests) directamente a una tabla persistente en DuckDB.<br>
-2. **Transform (T):** 
+2. **Transform (T):**<br>
 &nbsp;&nbsp;&nbsp;&nbsp; - Normalización de categorías de texto.<br><br>
 ![Falta Normalizar](images/ComplaintTypeCount.png)<br><br>
 &nbsp;&nbsp;&nbsp;&nbsp; - Limpieza de Schema: Normalización programática de nombres de columnas (snake_case) usando Python + SQL.<br><br>
