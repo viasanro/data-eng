@@ -1,30 +1,29 @@
-## Implementación de Slowly Changing Dimension (SCD Type 2) con DuckDB
+# Implementación de Slowly Changing Dimension (SCD Type 2) con DuckDB
 
-> Contexto / Problemática<br>
+## Contexto / Problemática
 
-En los sistemas analíticos es común que ciertos atributos de negocio cambien a lo largo del tiempo.<br>
-Un ejemplo típico es el catálogo de productos de una cadena de retail, donde un SKU puede cambiar su estado de catalogación, su asociación con una tienda o incluso su jerarquía organizacional.<br><br>
+En los sistemas analíticos es común que ciertos atributos de negocio cambien a lo largo del tiempo.
+Un ejemplo típico es el catálogo de productos de una cadena de retail, donde un SKU puede cambiar su estado de catalogación, su asociación con una tienda o incluso su jerarquía organizacional.
 
-En un **Data Warehouse**, es necesario mantener el historial de estos cambios para poder responder preguntas como:<br>
+En un **Data Warehouse**, es necesario mantener el historial de estos cambios para poder responder preguntas como:
 
-- ¿Qué productos estaban catalogados en una tienda en una fecha determinada?<br>
-- ¿Cuándo cambió el estado de catalogación de un SKU?<br>
-- ¿Cómo evolucionó el catálogo en el tiempo?<br>
+* ¿Qué productos estaban catalogados en una tienda en una fecha determinada?
+* ¿Cuándo cambió el estado de catalogación de un SKU?
+* ¿Cómo evolucionó el catálogo en el tiempo?
 
-Para resolver este problema se utiliza el patrón **Slowly Changing Dimension Type 2 (SCD Type 2)**,<br> 
-que permite conservar el historial completo de los cambios insertando nuevas versiones del registro en lugar de sobrescribir los datos.<br><br>
+Para resolver este problema se utiliza el patrón **Slowly Changing Dimension Type 2 (SCD Type 2)**, que permite conservar el historial completo de los cambios insertando nuevas versiones del registro en lugar de sobrescribir los datos.
 
-Este proyecto implementa una **dimensión tipo 2 para un catálogo jerárquico de retail** utilizando:<br>
+Este proyecto implementa una **dimensión tipo 2 para un catálogo jerárquico de retail** utilizando:
 
-* generación de datos sintéticos<br>
-* procesamiento SQL<br>
-* almacenamiento analítico local<br>
+* generación de datos sintéticos
+* procesamiento SQL
+* almacenamiento analítico local
 
 ---
 
-> Arquitectura<br>
+# Arquitectura
 
-El flujo del proceso sigue las siguientes etapas:<br>
+El flujo del proceso sigue las siguientes etapas:
 
 ```
 Faker (generación de datos)
@@ -52,7 +51,7 @@ DimCatalogo (Dimensión final con PK)
 Export Parquet
 ```
 
-> Componentes principales<md>
+### Componentes principales
 
 **1. Generación de datos**
 
@@ -100,17 +99,17 @@ Esto facilita detectar modificaciones en los atributos.
 
 Se crea la tabla **SourceCatalogo**, que contiene tres tipos de registros:
 
-1️⃣ **Registros nuevos**
+1️ **Registros nuevos**
 
 ```sql
 WHERE NOT EXISTS (...)
 ```
 
-2️⃣ **Registros modificados**
+2️ **Registros modificados**
 
 Se detectan usando el `checksum`.
 
-3️⃣ **Registros a cerrar**
+3️ **Registros a cerrar**
 
 Cuando un registro cambia:
 
