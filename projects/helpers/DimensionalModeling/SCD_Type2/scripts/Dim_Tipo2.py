@@ -14,7 +14,7 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 con = duckdb.connect("..\\outputs\\catalogo.duckdb")
 
 # Generamos los datos falsos para la tabla de catálogo.
-# Configuramos Faker para que hable español (es-ES o es_MX)
+# Configuramos Faker para que hable español (es-ES)
 fake = Faker(['es_ES'])
 
 holdings = ["Cencosud", "Tottus", "Walmart", "Smu"]
