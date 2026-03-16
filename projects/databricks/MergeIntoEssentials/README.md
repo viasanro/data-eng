@@ -17,8 +17,8 @@ MERGE INTO en databricks es una poderosa herramienta para ingesta de datos. Perm
 * **Catalog:** dbacad
 * **Schema:** Creado dinámicamente por usuario
 * **Target Table:** main_users_target
-* **Source Tables:** 
-&nbsp;&nbsp;&nbsp;&nbsp; update_users_source
+* **Source Tables:**<br>
+&nbsp;&nbsp;&nbsp;&nbsp; update_users_source<br>
 &nbsp;&nbsp;&nbsp;&nbsp; new_users_source
 
 > MERGE INTO
