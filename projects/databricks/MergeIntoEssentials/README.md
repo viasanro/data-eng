@@ -37,12 +37,12 @@ WHEN NOT MATCHED THEN {not_matched_action}
 
 * Podemos usar MERGE INTO para realizar una ingesta a partir de un sistema CDC.
 * El SCHEMA ENFORCEMENT está habilitado por default en las tablas Delta.
-Es decir, se validan los datos entrantes contra el esquema existente, sino coincide la operación falla.
-&nbsp;&nbsp;&nbsp;&nbsp; 1. Esto genera pipelines predecibles
-&nbsp;&nbsp;&nbsp;&nbsp; 2. Asegura la consistencia de los datos
+Es decir, se validan los datos entrantes contra el esquema existente, sino coincide la operación falla.<br>
+&nbsp;&nbsp;&nbsp;&nbsp; 1. Esto genera pipelines predecibles<br>
+&nbsp;&nbsp;&nbsp;&nbsp; 2. Asegura la consistencia de los datos<br>
 &nbsp;&nbsp;&nbsp;&nbsp; 3. Nos protege contra cambios accidentales de esquema
 * Que ocurre si tu origen de datos evoluciona y agrega nuevas columnas?
-Podemos usar **MERGE INTO WITH SCHEMA EVOLUTION target_table** para actualizar el esquema en la tabla destino. (Requiere del Runtime 15.2 para arriba).
+Podemos usar **MERGE INTO WITH SCHEMA EVOLUTION target_table** para actualizar el esquema en la tabla destino. (Requiere del Runtime 15.2 para arriba).<br>
 Tambien se puede setear a el valor de la variable *spark.databricks.delta.schema.AutoMerge.enable* a true
 * La sentencia **DESCRIBE HISTORY table_name** nos permite inspeccionar el historial de las operaciones realizadas sobre la tabla en cuestión.
 * La sentencia **SELECT * FROM VERSION AS OF version_number** nos permite realizar el llamado *Time Travel* y visualizar los datos de una versión particular de la tabla en un momento determinado.
