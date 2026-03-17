@@ -1,0 +1,9 @@
+data/input/
+data/manifest.json
+**/__pycache__/
+**/*.pyc
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+*.egg-info/
+.venv/

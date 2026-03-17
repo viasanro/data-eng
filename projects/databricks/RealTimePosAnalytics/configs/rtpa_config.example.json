@@ -1,0 +1,10 @@
+{
+  "db_name_bronze": "rtpa_bronze",
+  "db_name_silver": "rtpa_silver",
+  "db_name_gold": "rtpa_gold",
+  "base_path": "dbfs:/tmp/rtpa",
+  "streaming_input_path": "dbfs:/tmp/rtpa/input/stream_pos_events",
+  "batch_input_path": "dbfs:/tmp/rtpa/input/batch_floor_snapshots",
+  "checkpoint_base_path": "dbfs:/tmp/rtpa/checkpoints",
+  "seed_path": "dbfs:/tmp/rtpa/input/seeds"
+}
