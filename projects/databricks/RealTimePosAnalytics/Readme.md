@@ -9,9 +9,7 @@ Se utilizará la arquitectura lambda junto con medallion con el patrón de dise�
 ![Architecture](images/Architecture.png)<br><br>
 Para ilustrar como la arquitectura lakehouse puede ser aplicada a los datos de un Punto de Venta, desarrollamos un workflow de demostracion dentro del cual calculamos un inventario Near Real Time. Para ello imaginamos 2 puntos de venta transmitiendo información relevante al inventario asociado, con ventas, reabastecimiento y perdidas, a través de transacciones de compras en linea y retiros en tiendas como parte de un inventario en streaming y por otro lado, un snapshot de las unidades de productos en piso que son capturadas por el POS y transmitidas por batch (lotes). Estos datos son simulados para un periodo de un mes y se muestran a una velocidad 10x mayor para una mejor visibilidad de los cambios de inventario.<br>
 *El proyecto está diseñado para generar entradas en una ruta de almacenamiento (por ejemplo, DBFS/almacenamiento de objetos en la nube) y luego ingerirlas en tablas Delta utilizando un enfoque Lambda + Medallion.*
-
 <br><br>
-
 ## Estructura del proyecto
 
 - **`notebooks/`**: notebooks (exportados como `.py`) para correr en Databricks.
@@ -20,6 +18,7 @@ Para ilustrar como la arquitectura lakehouse puede ser aplicada a los datos de u
   - `02_Bronze_Ingest.py`: ingesta Bronze (streaming + batch)
   - `03_Silver_Transform.py`: normalización a Silver
   - `04_Gold_Inventory_Near_Real_Time.py`: inventario Near Real Time (Gold)
+  - `05_Inventory_SQL_Examples.sql`: queries SQL de ejemplo (Gold/Silver/Bronze)
 - **`scripts/`**: generador local opcional de inputs (JSONL streaming + CSV batch).
 - **`src/rtpa/`**: helpers (schemas/config/paths) instalables como paquete python.
 - **`configs/`**: template de configuración.
