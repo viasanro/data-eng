@@ -20,6 +20,7 @@ Para ilustrar como la arquitectura lakehouse puede ser aplicada a los datos de u
   - `02_Bronze_Ingest.py`: ingesta Bronze (streaming + batch)
   - `03_Silver_Transform.py`: normalización a Silver
   - `04_Gold_Inventory_Near_Real_Time.py`: inventario Near Real Time (Gold)
+  - `05_Inventory_SQL_Examples.sql`: queries SQL de ejemplo (Gold/Silver/Bronze)
 - **`scripts/`**: generador local opcional de inputs (JSONL streaming + CSV batch).
 - **`src/rtpa/`**: helpers (schemas/config/paths) instalables como paquete python.
 - **`configs/`**: template de configuración.
