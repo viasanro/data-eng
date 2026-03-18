@@ -7,6 +7,9 @@ from pyspark.sql import functions as F
 
 # COMMAND ----------
 
+# Ensure `import rtpa` works in Databricks Repos (no pip required)
+dbutils.notebook.run("_rtpa_bootstrap", 0)
+
 # Pull config/paths from the setup notebook (run it first)
 # If you're using Databricks Repos, ensure `src/` is on PYTHONPATH:
 # %pip install -e .

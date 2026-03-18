@@ -1,6 +1,10 @@
 # Databricks notebook source
 # This notebook centralizes configuration used by the demo notebooks.
 
+# COMMAND ----------
+# Ensure `import rtpa` works in Databricks Repos (no pip required)
+dbutils.notebook.run("_rtpa_bootstrap", 0)
+
 import json
 
 # COMMAND ----------
