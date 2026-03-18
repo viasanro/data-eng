@@ -147,7 +147,8 @@ while current < end_utc:
             snap_rows.append(
                 (
                     snap_time.strftime("%Y-%m-%d"),
-                    snap_time.replace(tzinfo=timezone.utc).isoformat(),
+                    # Keep as datetime for Spark Connect compatibility
+                    snap_time.replace(tzinfo=timezone.utc),
                     store_id,
                     sku,
                     max(0, true_qty + noise),
@@ -158,13 +159,13 @@ while current < end_utc:
             schema=T.StructType(
                 [
                     T.StructField("snapshot_date", T.StringType(), False),
-                    T.StructField("snapshot_time", T.StringType(), False),
+                    T.StructField("snapshot_time", T.TimestampType(), False),
                     T.StructField("store_id", T.StringType(), False),
                     T.StructField("sku", T.StringType(), False),
                     T.StructField("on_floor_qty", T.IntegerType(), False),
                 ]
             ),
-        ).withColumn("snapshot_time", F.to_timestamp("snapshot_time")).withColumn("_ingest_time", F.current_timestamp())
+        ).withColumn("_ingest_time", F.current_timestamp())
 
         snap_df.write.format("delta").mode("append").saveAsTable(bronze_snapshots_table)
         next_snapshot = current + snapshot_every
