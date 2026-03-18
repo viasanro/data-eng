@@ -1,11 +1,14 @@
 # Databricks notebook source
 # MAGIC %md
-# MAGIC ### Setup (Databricks Repos)
-# MAGIC Databricks editable installs from `/Workspace/...` can be flaky depending on the runtime.
-# MAGIC This project now includes a top-level `rtpa/` package, and notebooks call a small bootstrap
-# MAGIC (`notebooks/_rtpa_bootstrap.py`) to ensure the repo root is on `sys.path`.
+# MAGIC ### Setup / verificación (Serverless friendly)
+# MAGIC En Databricks **Serverless** (Free Edition), los imports de paquetes Python desde Repos/Workspace
+# MAGIC pueden fallar incluso si existen en el repo.
 # MAGIC 
-# MAGIC You typically **do not need to pip install** anything to run the demo notebooks.
+# MAGIC Para que esto funcione de forma portable, el proyecto usa:
+# MAGIC - `notebooks/rtpa_lib.py` (código compartido)
+# MAGIC - y los notebooks principales hacen: `%run ./rtpa_lib`
+# MAGIC 
+# MAGIC Este notebook solo verifica que `%run` funciona.
 
 # COMMAND ----------
 # MAGIC %python
@@ -44,7 +47,6 @@
 # MAGIC # Optional quick verification (no installs)
 # MAGIC import importlib
 # MAGIC 
-# MAGIC # Run bootstrap (same as the pipeline notebooks)
-# MAGIC dbutils.notebook.run("notebooks/_rtpa_bootstrap", 0)
-# MAGIC m = importlib.import_module("rtpa")
-# MAGIC print("rtpa import OK from:", getattr(m, "__file__", "<unknown>"))
+# MAGIC # Verify shared lib loads (same mechanism as pipeline notebooks)
+# MAGIC # MAGIC %run ./notebooks/rtpa_lib
+# MAGIC print("RtpaConfig available:", "RtpaConfig" in globals())

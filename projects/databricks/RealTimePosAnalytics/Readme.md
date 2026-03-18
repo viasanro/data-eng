@@ -33,10 +33,9 @@ Estos datos son simulados para un periodo de un mes y se muestran a una velocida
 ### Opción A: generar inputs directamente en DBFS (más simple)
 
 1) Importa este folder como Databricks Repo (o copia los notebooks a tu workspace, puedes comprimir la carpeta a .zip y luego importarla desde Databricks👌).
-2) (Opcional) Ejecuta `RealTimePosAnalytics/00_setup_install.py` para verificar que `import rtpa` funciona.
+2) (Opcional) Ejecuta `RealTimePosAnalytics/00_setup_install.py` para verificar que el shared library carga.
    
-   Nota: los notebooks ya corren un bootstrap (`notebooks/_rtpa_bootstrap.py`) que agrega el repo root a `sys.path`,
-   por lo que normalmente no necesitas instalar nada con `pip`.
+   Nota (Serverless): los notebooks usan `%run ./rtpa_lib` para compartir código (más portable que `pip install` / imports de paquetes).
 
 3) Corre en orden:
 - `notebooks/00_Setup_And_Config.py`

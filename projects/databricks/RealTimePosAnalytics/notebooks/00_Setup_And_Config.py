@@ -2,8 +2,7 @@
 # This notebook centralizes configuration used by the demo notebooks.
 
 # COMMAND ----------
-# Ensure `import rtpa` works in Databricks Repos (no pip required)
-dbutils.notebook.run("_rtpa_bootstrap", 0)
+# MAGIC %run ./rtpa_lib
 
 import json
 
@@ -39,9 +38,6 @@ except Exception:
 cfg
 
 # COMMAND ----------
-
-from rtpa.config import RtpaConfig
-from rtpa.paths import build_paths
 
 cfg_obj = RtpaConfig.from_dict(cfg)
 paths = build_paths(cfg_obj)

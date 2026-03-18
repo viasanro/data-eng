@@ -7,8 +7,7 @@ from pyspark.sql import functions as F
 
 # COMMAND ----------
 
-# Ensure `import rtpa` works in Databricks Repos (no pip required)
-dbutils.notebook.run("_rtpa_bootstrap", 0)
+# MAGIC %run ./rtpa_lib
 
 # Pull config/paths from the setup notebook (run it first)
 # If you're using Databricks Repos, ensure `src/` is on PYTHONPATH:
@@ -33,8 +32,6 @@ bronze_snapshots_path = f"{base_path}/delta/bronze/floor_snapshots_batch"
 chk_events = f"{checkpoint_base}/bronze_pos_events_stream"
 
 # COMMAND ----------
-
-from rtpa.schemas import FLOOR_SNAPSHOT_SCHEMA, POS_EVENT_SCHEMA
 
 spark.sql(f"CREATE DATABASE IF NOT EXISTS {db_bronze}")
 
