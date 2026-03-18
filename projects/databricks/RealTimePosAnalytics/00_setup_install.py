@@ -44,6 +44,31 @@
 # COMMAND ----------
 # MAGIC %python
 # MAGIC import importlib
+# MAGIC import os
+# MAGIC import sys
+# MAGIC from pathlib import Path
+# MAGIC 
+# MAGIC # Recompute repo_root after restart (state is lost)
+# MAGIC def _guess_repo_root() -> str:
+# MAGIC     candidates = [Path(os.getcwd()).resolve()]
+# MAGIC     for start in candidates:
+# MAGIC         p = start if start.is_dir() else start.parent
+# MAGIC         for parent in [p, *p.parents]:
+# MAGIC             if (parent / "pyproject.toml").exists():
+# MAGIC                 return str(parent)
+# MAGIC     return "."
+# MAGIC 
+# MAGIC repo_root = _guess_repo_root()
+# MAGIC src_path = str(Path(repo_root) / "src")
+# MAGIC 
+# MAGIC # Databricks sometimes installs editable wheels from /Workspace without exposing modules reliably.
+# MAGIC # This makes imports deterministic for the src-layout project.
+# MAGIC if src_path not in sys.path:
+# MAGIC     sys.path.insert(0, src_path)
+# MAGIC 
+# MAGIC print("Repo root (post-restart):", repo_root)
+# MAGIC print("Added to sys.path:", src_path)
+# MAGIC print("sys.path[0:5]:", sys.path[:5])
 # MAGIC 
 # MAGIC m = importlib.import_module("rtpa")
 # MAGIC print("rtpa import OK from:", getattr(m, "__file__", "<unknown>"))
