@@ -1,99 +1,171 @@
 # Databricks notebook source
-# Bronze layer ingestion:
-# - streaming insert-oriented POS events via Auto Loader (cloudFiles)
-# - batch floor snapshots via CSV load (append)
+# Bronze layer data validation and processing for Serverless environments.
+#
+# This notebook assumes you have already run `01_Generate_Inputs_On_DBFS.py` which
+# creates managed Delta tables directly. This notebook validates and processes
+# the existing bronze tables without using DBFS paths (Serverless-compatible).
 
 from pyspark.sql import functions as F
 
 # COMMAND ----------
 
-# Pull config/paths from the setup notebook (run it first)
-# If you're using Databricks Repos, ensure `src/` is on PYTHONPATH:
-# %pip install -e .
+# MAGIC %run ./rtpa_lib
 
-dbutils.widgets.text("base_path", "dbfs:/tmp/rtpa", "Base path")
+# COMMAND ----------
+
+# Configuration for Serverless-compatible processing
 dbutils.widgets.text("db_name_bronze", "rtpa_bronze", "Bronze schema/database")
+dbutils.widgets.dropdown("validate_data", "true", ["true", "false"], "Validate bronze data quality")
+dbutils.widgets.dropdown("reprocess_data", "false", ["true", "false"], "Reprocess/clean existing data")
 
-base_path = dbutils.widgets.get("base_path").strip().rstrip("/")
 db_bronze = dbutils.widgets.get("db_name_bronze").strip()
-
-streaming_input_path = f"{base_path}/input/stream_pos_events"
-batch_input_path = f"{base_path}/input/batch_floor_snapshots"
-checkpoint_base = f"{base_path}/checkpoints"
+validate_data = dbutils.widgets.get("validate_data").strip().lower() == "true"
+reprocess_data = dbutils.widgets.get("reprocess_data").strip().lower() == "true"
 
 bronze_events_table = f"{db_bronze}.pos_events_stream"
 bronze_snapshots_table = f"{db_bronze}.floor_snapshots_batch"
 
-bronze_events_path = f"{base_path}/delta/bronze/pos_events_stream"
-bronze_snapshots_path = f"{base_path}/delta/bronze/floor_snapshots_batch"
-
-chk_events = f"{checkpoint_base}/bronze_pos_events_stream"
-
-# COMMAND ----------
-
-from rtpa.schemas import FLOOR_SNAPSHOT_SCHEMA, POS_EVENT_SCHEMA
-
-spark.sql(f"CREATE DATABASE IF NOT EXISTS {db_bronze}")
+print(f"Working with bronze tables:")
+print(f"  Events: {bronze_events_table}")
+print(f"  Snapshots: {bronze_snapshots_table}")
+print(f"  Validate: {validate_data}")
+print(f"  Reprocess: {reprocess_data}")
 
 # COMMAND ----------
 
-# Streaming ingestion (Auto Loader)
-events_stream_df = (
-    spark.readStream.format("cloudFiles")
-    .option("cloudFiles.format", "json")
-    .option("cloudFiles.inferColumnTypes", "false")
-    .schema(POS_EVENT_SCHEMA)
-    .load(streaming_input_path)
-    .withColumn("event_time", F.col("event_time").cast("timestamp"))
-    .withColumn("_ingest_time", F.current_timestamp())
-)
+# Check if bronze tables exist from notebook 01
+try:
+    events_count = spark.sql(f"SELECT COUNT(*) as cnt FROM {bronze_events_table}").collect()[0]["cnt"]
+    snapshots_count = spark.sql(f"SELECT COUNT(*) as cnt FROM {bronze_snapshots_table}").collect()[0]["cnt"]
+    print(f"✓ Bronze tables found:")
+    print(f"  Events: {events_count:,} rows")
+    print(f"  Snapshots: {snapshots_count:,} rows")
+except Exception as e:
+    print(f"❌ Bronze tables not found. Please run notebook 01 first: {e}")
+    # Stop execution if tables don't exist
+    dbutils.notebook.exit("Please run 01_Generate_Inputs_On_DBFS.py first")
 
-events_query = (
-    events_stream_df.writeStream.format("delta")
-    .option("checkpointLocation", chk_events)
-    .outputMode("append")
-    .partitionBy("event_date")
-    .trigger(availableNow=True)
-    .start(bronze_events_path)
-)
+# COMMAND ----------
 
-events_query.awaitTermination()
+# Data validation and quality checks
+if validate_data:
+    print("Validating bronze data quality...")
+    
+    # Check events table
+    events_validation = spark.sql(f"""
+        SELECT 
+            'events' as table_name,
+            COUNT(*) as total_rows,
+            COUNT(DISTINCT event_id) as unique_events,
+            COUNT(DISTINCT store_id) as unique_stores,
+            COUNT(DISTINCT sku) as unique_skus,
+            MIN(event_date) as min_date,
+            MAX(event_date) as max_date,
+            COUNT(*) - COUNT(DISTINCT event_id) as duplicate_events
+        FROM {bronze_events_table}
+    """)
+    
+    # Check snapshots table  
+    snapshots_validation = spark.sql(f"""
+        SELECT 
+            'snapshots' as table_name,
+            COUNT(*) as total_rows,
+            COUNT(DISTINCT store_id) as unique_stores,
+            COUNT(DISTINCT sku) as unique_skus,
+            MIN(snapshot_date) as min_date,
+            MAX(snapshot_date) as max_date,
+            COUNT(*) - COUNT(DISTINCT CONCAT(store_id, sku, snapshot_date)) as duplicate_snapshots
+        FROM {bronze_snapshots_table}
+    """)
+    
+    print("Events validation:")
+    events_validation.show()
+    
+    print("Snapshots validation:")
+    snapshots_validation.show()
+    
+    # Check for data quality issues
+    duplicate_events = events_validation.collect()[0]["duplicate_events"]
+    duplicate_snapshots = snapshots_validation.collect()[0]["duplicate_snapshots"]
+    
+    if duplicate_events > 0 or duplicate_snapshots > 0:
+        print(f"⚠️ Found data quality issues:")
+        if duplicate_events > 0:
+            print(f"  - {duplicate_events} duplicate events")
+        if duplicate_snapshots > 0:
+            print(f"  - {duplicate_snapshots} duplicate snapshots")
+    else:
+        print("✓ No data quality issues found")
 
-spark.sql(
-    f"""
-    CREATE TABLE IF NOT EXISTS {bronze_events_table}
-    USING DELTA
-    LOCATION '{bronze_events_path}'
-    """
-)
+# COMMAND ----------
 
+# Data reprocessing/cleaning (optional)
+if reprocess_data:
+    print("Reprocessing bronze data...")
+    
+    # Remove duplicate events if any
+    spark.sql(f"""
+        CREATE OR REPLACE TEMP VIEW deduped_events AS
+        SELECT * FROM (
+            SELECT 
+                *,
+                ROW_NUMBER() OVER (PARTITION BY event_id ORDER BY _ingest_time DESC) as rn
+            FROM {bronze_events_table}
+        ) WHERE rn = 1
+    """)
+    
+    spark.sql(f"""
+        INSERT OVERWRITE {bronze_events_table}
+        SELECT * FROM deduped_events
+    """)
+    
+    # Remove duplicate snapshots if any
+    spark.sql(f"""
+        CREATE OR REPLACE TEMP VIEW deduped_snapshots AS
+        SELECT * FROM (
+            SELECT 
+                *,
+                ROW_NUMBER() OVER (PARTITION BY store_id, sku, snapshot_date ORDER BY _ingest_time DESC) as rn
+            FROM {bronze_snapshots_table}
+        ) WHERE rn = 1
+    """)
+    
+    spark.sql(f"""
+        INSERT OVERWRITE {bronze_snapshots_table}
+        SELECT * FROM deduped_snapshots
+    """)
+    
+    print("✓ Data reprocessing completed")
+
+# COMMAND ----------
+
+# Display sample data from bronze tables
+print("Sample events data:")
 display(spark.table(bronze_events_table).limit(10))
 
+print("Sample snapshots data:")
+display(spark.table(bronze_snapshots_table).limit(10))
+
 # COMMAND ----------
 
-# Batch ingestion (snapshots)
-snapshots_df = (
-    spark.read.format("csv")
-    .option("header", True)
-    .schema(FLOOR_SNAPSHOT_SCHEMA)
-    .load(batch_input_path)
-    .withColumn("_ingest_time", F.current_timestamp())
-)
+# Summary statistics
+print("Bronze layer summary:")
+spark.sql(f"""
+    SELECT 'events' as table_type, COUNT(*) as row_count, 
+           COUNT(DISTINCT store_id) as stores, 
+           COUNT(DISTINCT sku) as skus,
+           MIN(event_date) as min_date,
+           MAX(event_date) as max_date
+    FROM {bronze_events_table}
+    UNION ALL
+    SELECT 'snapshots' as table_type, COUNT(*) as row_count,
+           COUNT(DISTINCT store_id) as stores,
+           COUNT(DISTINCT sku) as skus, 
+           MIN(snapshot_date) as min_date,
+           MAX(snapshot_date) as max_date
+    FROM {bronze_snapshots_table}
+""").show()
 
-(
-    snapshots_df.write.format("delta")
-    .mode("append")
-    .partitionBy("snapshot_date")
-    .save(bronze_snapshots_path)
-)
-
-spark.sql(
-    f"""
-    CREATE TABLE IF NOT EXISTS {bronze_snapshots_table}
-    USING DELTA
-    LOCATION '{bronze_snapshots_path}'
-    """
-)
-
-display(spark.table(bronze_snapshots_table).limit(10))
+print("✓ Bronze layer processing completed successfully!")
+print("You can now proceed to notebook 03_Silver_Transform.py")
 

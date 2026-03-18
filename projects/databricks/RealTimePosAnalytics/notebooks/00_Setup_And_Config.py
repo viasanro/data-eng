@@ -1,6 +1,11 @@
 # Databricks notebook source
 # This notebook centralizes configuration used by the demo notebooks.
 
+# COMMAND ----------
+# MAGIC %run ./rtpa_lib
+
+# COMMAND ----------
+
 import json
 
 # COMMAND ----------
@@ -35,9 +40,6 @@ except Exception:
 cfg
 
 # COMMAND ----------
-
-from rtpa.config import RtpaConfig
-from rtpa.paths import build_paths
 
 cfg_obj = RtpaConfig.from_dict(cfg)
 paths = build_paths(cfg_obj)
