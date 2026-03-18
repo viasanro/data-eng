@@ -1,7 +1,11 @@
 # Databricks notebook source
-# Bronze layer ingestion:
+# OPTIONAL Bronze ingestion from files:
 # - streaming insert-oriented POS events via Auto Loader (cloudFiles)
 # - batch floor snapshots via CSV load (append)
+#
+# Note: In Databricks Serverless Free Edition, DBFS root is often disabled, so the
+# recommended path is to use `01_Generate_Inputs_On_DBFS.py` (which writes directly
+# to managed Delta tables) and skip this notebook.
 
 from pyspark.sql import functions as F
 

@@ -15,35 +15,29 @@ from pyspark.sql.window import Window
 
 # COMMAND ----------
 
-dbutils.widgets.text("base_path", "dbfs:/tmp/rtpa", "Base path (for seeds)")
+dbutils.widgets.text("db_name_bronze", "rtpa_bronze", "Bronze schema/database (seeds)")
 dbutils.widgets.text("db_name_silver", "rtpa_silver", "Silver schema/database")
 dbutils.widgets.text("db_name_gold", "rtpa_gold", "Gold schema/database")
 
-base_path = dbutils.widgets.get("base_path").strip().rstrip("/")
+db_bronze = dbutils.widgets.get("db_name_bronze").strip()
 db_silver = dbutils.widgets.get("db_name_silver").strip()
 db_gold = dbutils.widgets.get("db_name_gold").strip()
-
-seed_path = f"{base_path}/input/seeds"
 
 spark.sql(f"CREATE DATABASE IF NOT EXISTS {db_gold}")
 
 silver_movements_table = f"{db_silver}.inventory_movements"
 silver_snapshots_table = f"{db_silver}.floor_snapshots"
+seed_starting_stock_table = f"{db_bronze}.starting_stock_seed"
 
 gold_table = f"{db_gold}.inventory_nrt"
 
 # COMMAND ----------
 
-# Load starting stock (seed). Generator writes as a 1-part CSV dir; so load path recursively.
-starting = (
-    spark.read.format("csv")
-    .option("header", True)
-    .load(f"{seed_path}/starting_stock.csv")
-    .select(
-        F.col("store_id"),
-        F.col("sku"),
-        F.col("starting_qty").cast("int").alias("starting_qty"),
-    )
+# Load starting stock seed from Bronze managed table (Serverless-safe).
+starting = spark.table(seed_starting_stock_table).select(
+    F.col("store_id"),
+    F.col("sku"),
+    F.col("starting_qty").cast("int").alias("starting_qty"),
 )
 
 movements = spark.table(silver_movements_table).select(

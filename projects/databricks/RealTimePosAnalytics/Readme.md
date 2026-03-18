@@ -35,8 +35,8 @@ Estos datos son simulados para un periodo de un mes y se muestran a una velocida
 
 3) Corre en orden:
 - `notebooks/00_Setup_And_Config.py`
-- `notebooks/01_Generate_Inputs_On_DBFS.py` (por defecto escribe en `dbfs:/tmp/rtpa`)
-- `notebooks/02_Bronze_Ingest.py`
+- `notebooks/01_Generate_Inputs_On_DBFS.py` (Serverless-safe: genera y escribe directo a tablas Bronze)
+- `notebooks/02_Bronze_Ingest.py` (opcional: solo si vas a ingerir desde archivos/rutas accesibles)
 - `notebooks/03_Silver_Transform.py`
 - `notebooks/04_Gold_Inventory_Near_Real_Time.py`
 
