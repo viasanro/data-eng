@@ -43,19 +43,42 @@
 # MAGIC # Make rtpa importable for *all* notebooks on this cluster by writing a .pth file
 # MAGIC # that points to the repo's src/ directory.
 # MAGIC import os
-# MAGIC import site
+# MAGIC import sys
 # MAGIC from pathlib import Path
 # MAGIC 
 # MAGIC repo_root = repo_root  # from previous cell
 # MAGIC src_path = str(Path(repo_root) / "src")
 # MAGIC 
-# MAGIC # Pick the first site-packages path (Databricks typically has exactly one writable path here)
-# MAGIC sp = site.getsitepackages()[0]
-# MAGIC pth_file = Path(sp) / "rtpa_src.pth"
+# MAGIC # Write the .pth into *active* site-packages folders (present in sys.path).
+# MAGIC # On Databricks these paths vary by cluster/runtime, and site.getsitepackages()
+# MAGIC # may not include the ephemeral env that is actually used.
+# MAGIC candidates = [
+# MAGIC     p for p in sys.path if isinstance(p, str) and p.endswith("site-packages")
+# MAGIC ]
 # MAGIC 
-# MAGIC pth_file.write_text(src_path + "\n", encoding="utf-8")
-# MAGIC print("Wrote:", str(pth_file))
-# MAGIC print("Contents:", pth_file.read_text(encoding="utf-8").strip())
+# MAGIC written = []
+# MAGIC for sp in candidates:
+# MAGIC     try:
+# MAGIC         sp_path = Path(sp)
+# MAGIC         if not sp_path.exists():
+# MAGIC             continue
+# MAGIC         if not os.access(str(sp_path), os.W_OK):
+# MAGIC             continue
+# MAGIC         pth_file = sp_path / "rtpa_src.pth"
+# MAGIC         pth_file.write_text(src_path + "\n", encoding="utf-8")
+# MAGIC         written.append(str(pth_file))
+# MAGIC     except Exception as e:
+# MAGIC         print(f"Could not write .pth to {sp}: {e}")
+# MAGIC 
+# MAGIC print("Repo src path:", src_path)
+# MAGIC print("Wrote .pth files:")
+# MAGIC for p in written:
+# MAGIC     print(" -", p)
+# MAGIC if not written:
+# MAGIC     raise RuntimeError(
+# MAGIC         "Could not write rtpa_src.pth to any active site-packages directory. "
+# MAGIC         "You may need a cluster library install path or different permissions."
+# MAGIC     )
 
 # COMMAND ----------
 # MAGIC %restart_python
