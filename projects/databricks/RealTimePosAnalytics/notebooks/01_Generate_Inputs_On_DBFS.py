@@ -121,7 +121,8 @@ while current < end_utc:
             events.append(
                 {
                     "event_id": str(uuid.uuid4()),
-                    "event_time": current.replace(tzinfo=timezone.utc).isoformat(),
+                    # Spark Connect expects a real datetime for TimestampType columns
+                    "event_time": current.replace(tzinfo=timezone.utc),
                     "event_date": current.strftime("%Y-%m-%d"),
                     "store_id": store_id,
                     "sku": sku,
@@ -134,7 +135,6 @@ while current < end_utc:
 
     events_df = (
         spark.createDataFrame(events, schema=POS_EVENT_SCHEMA)
-        .withColumn("event_time", F.to_timestamp("event_time"))
         .withColumn("_ingest_time", F.current_timestamp())
     )
     events_df.write.format("delta").mode("append").saveAsTable(bronze_events_table)
