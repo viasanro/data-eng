@@ -7,8 +7,7 @@ from pyspark.sql import functions as F
 
 # COMMAND ----------
 
-# Ensure `import rtpa` works in Databricks Repos (no pip required)
-dbutils.notebook.run("_rtpa_bootstrap", 0)
+# MAGIC %run ./rtpa_lib
 
 dbutils.widgets.text("db_name_bronze", "rtpa_bronze", "Bronze schema/database")
 dbutils.widgets.text("db_name_silver", "rtpa_silver", "Silver schema/database")

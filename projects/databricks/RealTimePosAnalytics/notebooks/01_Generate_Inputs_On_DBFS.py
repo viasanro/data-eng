@@ -15,8 +15,7 @@ from pyspark.sql import types as T
 
 # COMMAND ----------
 
-# Ensure `import rtpa` works in Databricks Repos (no pip required)
-dbutils.notebook.run("_rtpa_bootstrap", 0)
+# MAGIC %run ./rtpa_lib
 
 # Reuse config + paths
 dbutils.widgets.text("base_path", "dbfs:/tmp/rtpa", "Base path")

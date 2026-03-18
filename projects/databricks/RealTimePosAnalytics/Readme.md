@@ -14,18 +14,16 @@ Estos datos son simulados para un periodo de un mes y se muestran a una velocida
 <br><br>
 ## Estructura del proyecto
 
-- **`00_setup_install.py`**: notebook opcional de verificación (ejecuta el bootstrap y valida `import rtpa`).
-- **`notebooks/`**: notebooks (exportados como `.py`) para correr en Databricks.
+- **`notebooks/`**: notebooks (exportados como `.py`/`.sql`) para correr en Databricks Serverless.
+  - `rtpa_lib.py`: librería compartida (Serverless-friendly). Los demás notebooks hacen `%run ./rtpa_lib`.
   - `00_Setup_And_Config.py`: config + creación de schemas (Bronze/Silver/Gold)
   - `01_Generate_Inputs_On_DBFS.py`: genera datos sintéticos directo en DBFS
   - `02_Bronze_Ingest.py`: ingesta Bronze (streaming + batch)
   - `03_Silver_Transform.py`: normalización a Silver
   - `04_Gold_Inventory_Near_Real_Time.py`: inventario Near Real Time (Gold)
   - `05_Inventory_SQL_Examples.sql`: queries SQL de ejemplo (Gold/Silver/Bronze)
-  - `_rtpa_bootstrap.py`: helper para que `import rtpa` funcione en Databricks Repos
 - **`scripts/`**: generador local opcional de inputs (JSONL streaming + CSV batch).
-- **`src/rtpa/`**: helpers (schemas/config/paths) instalables como paquete python.
-- **`configs/`**: template de configuración.
+- **`configs/`**: template de configuración (opcional).
 - **`data/`**: opcional (si quieres generar inputs dentro del repo).
 
 ## Cómo ejecutar (Databricks)
@@ -33,9 +31,7 @@ Estos datos son simulados para un periodo de un mes y se muestran a una velocida
 ### Opción A: generar inputs directamente en DBFS (más simple)
 
 1) Importa este folder como Databricks Repo (o copia los notebooks a tu workspace, puedes comprimir la carpeta a .zip y luego importarla desde Databricks👌).
-2) (Opcional) Ejecuta `RealTimePosAnalytics/00_setup_install.py` para verificar que el shared library carga.
-   
-   Nota (Serverless): los notebooks usan `%run ./rtpa_lib` para compartir código (más portable que `pip install` / imports de paquetes).
+2) Corre en orden (todos usan `%run ./rtpa_lib` para compartir código; no necesitas instalar paquetes):
 
 3) Corre en orden:
 - `notebooks/00_Setup_And_Config.py`

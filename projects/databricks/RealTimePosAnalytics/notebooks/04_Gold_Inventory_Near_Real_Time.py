@@ -11,8 +11,7 @@ from pyspark.sql.window import Window
 
 # COMMAND ----------
 
-# Ensure `import rtpa` works in Databricks Repos (no pip required)
-dbutils.notebook.run("_rtpa_bootstrap", 0)
+# MAGIC %run ./rtpa_lib
 
 dbutils.widgets.text("base_path", "dbfs:/tmp/rtpa", "Base path (for seeds)")
 dbutils.widgets.text("db_name_silver", "rtpa_silver", "Silver schema/database")
