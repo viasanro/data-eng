@@ -30,15 +30,15 @@ Estos datos son simulados para un periodo de un mes y se muestran a una velocida
 
 ### Flujo principal recomendado (Serverless-compatible)
 
-1) Importa este folder como Databricks Repo (o copia los notebooks a tu workspace, puedes comprimir la carpeta a .zip y luego importarla desde Databricks👌).
-2) Corre en orden (todos usan `%run ./rtpa_lib` para compartir código; no necesitas instalar paquetes):
-
-3) Ejecución secuencial:
+1) Importa este folder como Databricks Repo (o copia los notebooks a tu workspace, puedes comprimir la carpeta a .zip y luego importarla desde Databricks👌).<br>
+**Nota:** todos usan `%run ./rtpa_lib` para compartir código; no necesitas instalar paquetes):
+2) Ejecución secuencial:
 - `notebooks/00_Setup_And_Config.py` (crea schemas y configura la base de datos)
 - `notebooks/01_Generate_Inputs_On_DBFS.py` (genera datos sintéticos directamente en tablas Bronze gestionadas)
 - `notebooks/02_Bronze_Ingest.py` (valida y procesa datos Bronze existentes)
 - `notebooks/03_Silver_Transform.py` (transforma datos a capa Silver)
 - `notebooks/04_Gold_Inventory_Near_Real_Time.py` (calcula inventario NRT en capa Gold)
+- *Bonus:* `notebook/05_Inventory_SQL_Examples.sql` (para realizar consultas de pruebas sobre el dataset final generado) 
 
 ### Características Serverless
 
