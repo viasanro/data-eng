@@ -39,6 +39,9 @@
 # MAGIC %pip install -e "$repo_root"
 
 # COMMAND ----------
+# MAGIC %restart_python
+
+# COMMAND ----------
 # MAGIC %python
 # MAGIC import importlib
 # MAGIC 
