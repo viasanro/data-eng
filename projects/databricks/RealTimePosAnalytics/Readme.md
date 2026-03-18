@@ -14,6 +14,7 @@ Estos datos son simulados para un periodo de un mes y se muestran a una velocida
 <br><br>
 ## Estructura del proyecto
 
+- **`00_setup_install.py`**: notebook de instalación para Databricks (asegura que `import rtpa` funcione).
 - **`notebooks/`**: notebooks (exportados como `.py`) para correr en Databricks.
   - `00_Setup_And_Config.py`: config + creación de schemas (Bronze/Silver/Gold)
   - `01_Generate_Inputs_On_DBFS.py`: genera datos sintéticos directo en DBFS
@@ -31,9 +32,10 @@ Estos datos son simulados para un periodo de un mes y se muestran a una velocida
 ### Opción A: generar inputs directamente en DBFS (más simple)
 
 1) Importa este folder como Databricks Repo (o copia los notebooks a tu workspace, puedes comprimir la carpeta a .zip y luego importarla desde Databricks👌).
-2) Desde un cluster, instala el paquete del repo (para `import rtpa`):<br>
-Ejecuta la siguiente notebook.
-- `RealTimePosAnalytics/00_setup_install.py`
+2) En tu cluster, ejecuta primero el instalador para que los notebooks puedan hacer `import rtpa` (package en `src/rtpa/`):
+   - `RealTimePosAnalytics/00_setup_install.py`
+   
+   Este instalador corre `pip install -e "<repo_root>"` (detecta el repo root buscando `pyproject.toml`) y valida el import.
 
 3) Corre en orden:
 - `notebooks/00_Setup_And_Config.py`
