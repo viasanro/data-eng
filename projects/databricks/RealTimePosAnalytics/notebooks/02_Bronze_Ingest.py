@@ -9,6 +9,8 @@ from pyspark.sql import functions as F
 
 # MAGIC %run ./rtpa_lib
 
+# COMMAND ----------
+
 # Pull config/paths from the setup notebook (run it first)
 # If you're using Databricks Repos, ensure `src/` is on PYTHONPATH:
 # %pip install -e .

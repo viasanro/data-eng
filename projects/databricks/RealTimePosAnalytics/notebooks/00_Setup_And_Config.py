@@ -4,6 +4,8 @@
 # COMMAND ----------
 # MAGIC %run ./rtpa_lib
 
+# COMMAND ----------
+
 import json
 
 # COMMAND ----------

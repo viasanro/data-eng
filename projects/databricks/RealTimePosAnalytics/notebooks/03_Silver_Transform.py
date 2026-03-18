@@ -9,6 +9,8 @@ from pyspark.sql import functions as F
 
 # MAGIC %run ./rtpa_lib
 
+# COMMAND ----------
+
 dbutils.widgets.text("db_name_bronze", "rtpa_bronze", "Bronze schema/database")
 dbutils.widgets.text("db_name_silver", "rtpa_silver", "Silver schema/database")
 

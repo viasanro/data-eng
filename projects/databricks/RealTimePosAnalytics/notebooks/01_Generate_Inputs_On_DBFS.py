@@ -17,6 +17,8 @@ from pyspark.sql import types as T
 
 # MAGIC %run ./rtpa_lib
 
+# COMMAND ----------
+
 # Reuse config + paths
 dbutils.widgets.text("base_path", "dbfs:/tmp/rtpa", "Base path")
 dbutils.widgets.text("days", "30", "Days to simulate")
