@@ -31,9 +31,9 @@ Estos datos son simulados para un periodo de un mes y se muestran a una velocida
 ### Opción A: generar inputs directamente en DBFS (más simple)
 
 1) Importa este folder como Databricks Repo (o copia los notebooks a tu workspace, puedes comprimir la carpeta a .zip y luego importarla desde Databricks👌).
-2) Desde un cluster, instala el paquete del repo (para `import rtpa`):
+2) Desde un cluster, instala el paquete del repo (para `import rtpa`):<br>
 Ejecuta la siguiente notebook.
-- `RealTimePosAnalytics/00_setup_install_py`
+- `RealTimePosAnalytics/00_setup_install.py`
 
 3) Corre en orden:
 - `notebooks/00_Setup_And_Config.py`
