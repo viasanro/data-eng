@@ -39,6 +39,25 @@
 # MAGIC %pip install -e "$repo_root"
 
 # COMMAND ----------
+# MAGIC %python
+# MAGIC # Make rtpa importable for *all* notebooks on this cluster by writing a .pth file
+# MAGIC # that points to the repo's src/ directory.
+# MAGIC import os
+# MAGIC import site
+# MAGIC from pathlib import Path
+# MAGIC 
+# MAGIC repo_root = repo_root  # from previous cell
+# MAGIC src_path = str(Path(repo_root) / "src")
+# MAGIC 
+# MAGIC # Pick the first site-packages path (Databricks typically has exactly one writable path here)
+# MAGIC sp = site.getsitepackages()[0]
+# MAGIC pth_file = Path(sp) / "rtpa_src.pth"
+# MAGIC 
+# MAGIC pth_file.write_text(src_path + "\n", encoding="utf-8")
+# MAGIC print("Wrote:", str(pth_file))
+# MAGIC print("Contents:", pth_file.read_text(encoding="utf-8").strip())
+
+# COMMAND ----------
 # MAGIC %restart_python
 
 # COMMAND ----------
@@ -60,9 +79,7 @@
 # MAGIC 
 # MAGIC repo_root = _guess_repo_root()
 # MAGIC src_path = str(Path(repo_root) / "src")
-# MAGIC 
-# MAGIC # Databricks sometimes installs editable wheels from /Workspace without exposing modules reliably.
-# MAGIC # This makes imports deterministic for the src-layout project.
+# MAGIC # `rtpa_src.pth` should have added src_path to sys.path already, but keep a safe fallback.
 # MAGIC if src_path not in sys.path:
 # MAGIC     sys.path.insert(0, src_path)
 # MAGIC 
