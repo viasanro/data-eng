@@ -1,4 +1,10 @@
 ## **Análisis de Punto de Venta en Tiempo Real.**<br><br>
+> *Metodología:*
+
+Este proyecto fué desarrollado mediante un flujo de trabajo asistido por IA (AI-Assisted workflow).<br>
+Diseñe la arquitectura del sistema, los contratos de datos y la lógica de Medallion, aprovechando Cursor AI para la generación de código repetitivo y su optimización.<br>
+Esto me permitió centrarme en los desafíos de ingeniería de alto nivel y la calidad de datos.<br><br>
+
 >*Problemática:* 
 
 La necesidad de datos en tiempo real en el segmento retail y como superar los desafíos del streaming de datos del punto de venta a escala con un datalakehouse.<br><br>
@@ -70,3 +76,14 @@ Luego copia `data/input/stream_pos_events` y `data/input/batch_floor_snapshots` 
   - `rtpa_silver.floor_snapshots`
 - **Gold**
   - `rtpa_gold.inventory_nrt` (inventario NRT por tienda y SKU)
+ 
+## 🧠 Desafíos y Aprendizajes
+Este proyecto fué desarrollado bajo un enfoque de **Ingeniría de Datos Mederna** priorizando la arquitectura y la eficiencia mediante el uso de herramientas de IA.<br>
+1. Desarrollo Asistido y Curación Técnica (AI-Augmented Engineering)<br>
+- Ajuste y Refinamiento: Capacidad para identificar fallos en el código generado por IA, ajustando la lógica hasta lograr una solución end-to-end funcional.<br>
+- Prompt Engineering de Arquitectura: Definición clara de contratos de datos y estructuras de directorios desde el README.md para guiar a la IA hacia resultados precisos.<br>
+2. Resolución de Aislamiento en Entornos Cloud (Databricks Serverless)<br>
+Uno de los mayores desafíos fue la gestión de dependencias y rutas dinámicas en un entorno de Databricks Community Edition. Aprendí a:<br>
+- Implementar un sistema de inyección de rutas dinámicas mediante sys.path y dbutils, permitiendo que el proyecto sea 100% portátil sin hardcoding.<br>
+3. Visión End-to-End
+- El proyecto reforzó mi capacidad para ver el flujo completo: desde la necesidad de negocio (KPIs de logística y retail) hasta la implementación técnica de un simulador de eventos en tiempo real con integridad de datos (Delta Lake).
