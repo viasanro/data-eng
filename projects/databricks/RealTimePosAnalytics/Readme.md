@@ -1,7 +1,7 @@
 ## **Análisis de Punto de Venta en Tiempo Real.**<br><br>
 > *Metodología:*
 
-Este proyecto fué desarrollado mediante un flujo de trabajo asistido por IA (AI-Assisted workflow).<br>
+Este proyecto fué desarrollado bajo un enfoque de **Ingeniría de Datos Mederna** priorizando la arquitectura y la eficiencia mediante el uso de herramientas de IA (**AI-Augmented Engineering**).<br>
 Diseñe la arquitectura del sistema, los contratos de datos y la lógica de Medallion, aprovechando Cursor AI para la generación de código repetitivo y su optimización.<br>
 Esto me permitió centrarme en los desafíos de ingeniería de alto nivel y la calidad de datos.<br><br>
 
@@ -78,7 +78,6 @@ Luego copia `data/input/stream_pos_events` y `data/input/batch_floor_snapshots` 
   - `rtpa_gold.inventory_nrt` (inventario NRT por tienda y SKU)
  
 ## 🧠 Desafíos y Aprendizajes
-Este proyecto fué desarrollado bajo un enfoque de **Ingeniría de Datos Mederna** priorizando la arquitectura y la eficiencia mediante el uso de herramientas de IA.<br>
 1. Desarrollo Asistido y Curación Técnica (AI-Augmented Engineering)<br>
 - Ajuste y Refinamiento: Capacidad para identificar fallos en el código generado por IA, ajustando la lógica hasta lograr una solución end-to-end funcional.<br>
 - Prompt Engineering de Arquitectura: Definición clara de contratos de datos y estructuras de directorios desde el README.md para guiar a la IA hacia resultados precisos.<br>
