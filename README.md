@@ -10,11 +10,12 @@ Este repositorio contiene proyectos enfocados en:
 
 ## Proyectos destacados
 
-### 1. [Collect Anti-Patrón en Spark](https://github.com/viasanro/data-eng/tree/main/projects/databricks/CollectAntiPatternSpark)
-### 2. [Ingesta con MERGE INTO](https://github.com/viasanro/data-eng/tree/main/projects/databricks/MergeIntoEssentials)
-### 3. [Análisis de Punto de Venta Near-Real-Time](https://github.com/viasanro/data-eng/tree/main/projects/databricks/RealTimePosAnalytics)
-### 4. [Resolución de Clave Transitiva](https://github.com/viasanro/data-eng/tree/main/projects/databricks/TransitiveKeyResolution)
-### 5. [Modelado Dimensional - SCD Type2](https://github.com/viasanro/data-eng/tree/main/projects/helpers/DimensionalModeling/SCD_Type2)
+### 1. [RFM Segmentation](https://github.com/viasanro/data-eng/tree/main/projects/databricks/RFMsegmentation)
+### 2. [Collect Anti-Patrón en Spark](https://github.com/viasanro/data-eng/tree/main/projects/databricks/CollectAntiPatternSpark)
+### 3. [Ingesta con MERGE INTO](https://github.com/viasanro/data-eng/tree/main/projects/databricks/MergeIntoEssentials)
+### 4. [Análisis de Punto de Venta Near-Real-Time](https://github.com/viasanro/data-eng/tree/main/projects/databricks/RealTimePosAnalytics)
+### 5. [Resolución de Clave Transitiva](https://github.com/viasanro/data-eng/tree/main/projects/databricks/TransitiveKeyResolution)
+### 6. [Modelado Dimensional - SCD Type2](https://github.com/viasanro/data-eng/tree/main/projects/helpers/DimensionalModeling/SCD_Type2)
 
 ## Stack tecnológico
 PySpark | SQL | DuckDB | Databricks | Python
