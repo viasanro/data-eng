@@ -1,10 +1,4 @@
 # Databricks notebook source
-# DBTITLE 1,Reset
-
-
-
-# COMMAND ----------
-
 import pyspark.pandas as ps
 
 # COMMAND ----------
