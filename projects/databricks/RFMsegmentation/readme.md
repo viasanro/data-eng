@@ -44,7 +44,7 @@ La ventaja central de RFM es que sus tres dimensiones tienen correlato directo c
 - cuándo compró por última vez (urgencia de reactivación)
 - con qué frecuencia lo hace (lealtad operativa)
 - y cuánto dinero dejó (valor real para el negocio)<br>
-**Ningún otro método genera esa tríada de forma tan limpia y accionable con solo datos transaccionales. Además:**<br>
+**Ningún otro método genera esa información de forma tan limpia y accionable con solo datos transaccionales. Además:**<br>
 - Interpretable sin conocimiento técnico.
 - Cada segmento tiene acción de negocio directa.
 - No requiere etiquetas ni datos de entrenamiento.
