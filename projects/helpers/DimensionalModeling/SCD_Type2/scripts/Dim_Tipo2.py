@@ -170,7 +170,11 @@ try:
     con.execute(""" 
                 CREATE OR REPLACE TABLE DimCatalogo AS
                 SELECT
-                    CAST(COALESCE(dim.pk_catalogo, ROW_NUMBER() OVER (ORDER BY dim.key_catalogo) + cntrl.maxid) AS INTEGER) AS pk_catalogo
+                    -- La PK se resuelve por VERSION (key_catalogo + fecha_ini), no solo por key.
+                    -- Si se buscara solo por key, la version vigente ('S') y la cerrada ('N')
+                    -- recibirian la misma surrogate key, lo que rompe la premisa de SCD2.
+                    -- El ORDER BY usa csk: dim es NULL en las filas nuevas y las dejaba sin orden determinista.
+                    CAST(COALESCE(dim.pk_catalogo, ROW_NUMBER() OVER (ORDER BY csk.key_catalogo, csk.fecha_ini) + cntrl.maxid) AS INTEGER) AS pk_catalogo
                     ,csk.key_catalogo
                     ,csk.holding
                     ,csk.cadena
@@ -184,8 +188,13 @@ try:
                     ,CAST(current_timestamp AS datetime) AS last_update
                 FROM DimCatalogoSinPK csk
                 CROSS JOIN (SELECT COALESCE(MAX(CAST(pk_catalogo AS INTEGER)), 0) AS maxid FROM DimCatalogo) cntrl
-                LEFT JOIN DimCatalogo dim ON dim.key_catalogo = csk.key_catalogo
-                WHERE dim.key_catalogo != 'DESCONOCIDO'
+                LEFT JOIN DimCatalogo dim
+                       ON  dim.key_catalogo = csk.key_catalogo
+                      AND  dim.fecha_ini    = csk.fecha_ini
+                -- COALESCE obligatorio: para una key nueva el LEFT JOIN deja dim.key_catalogo en
+                -- NULL, y NULL != 'DESCONOCIDO' evalua a NULL (no TRUE), con lo cual este WHERE
+                -- descartaba en silencio todos los registros nuevos en las cargas incrementales.
+                WHERE COALESCE(dim.key_catalogo, '') != 'DESCONOCIDO'
                 UNION
                 SELECT -1           AS pk_catalogo
                     ,'DESCONOCIDO'  AS key_catalogo 
